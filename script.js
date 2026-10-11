@@ -38,3 +38,50 @@ if (form) {
     window.location.href = url;
   });
 }
+// Pankaj Kumar Rajpoot - Gallery Lightbox
+
+(function () {
+  const lightbox = document.getElementById("gallery-lightbox");
+  const lightboxImage = document.getElementById(
+    "gallery-lightbox-image"
+  );
+
+  if (!lightbox || !lightboxImage) return;
+
+  document.querySelectorAll(".gallery-item").forEach(function (button) {
+    button.addEventListener("click", function () {
+      lightboxImage.src = button.dataset.full;
+
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  function closeGallery() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+
+    lightboxImage.removeAttribute("src");
+    document.body.style.overflow = "";
+  }
+
+  const closeButton = lightbox.querySelector(".gallery-close");
+
+  if (closeButton) {
+    closeButton.addEventListener("click", closeGallery);
+  }
+
+  lightbox.addEventListener("click", function (event) {
+    if (event.target === lightbox) {
+      closeGallery();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeGallery();
+    }
+  });
+})();
