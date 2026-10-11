@@ -96,3 +96,7 @@
     font-size: 10px;
   }
 }
+/* Hide captions below gallery photos */
+.gallery-item span {
+  display: none !important;
+}
