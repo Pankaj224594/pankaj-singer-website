@@ -85,3 +85,55 @@ if (form) {
     }
   });
 })();
+// Stop other YouTube videos when one starts playing
+(function () {
+  const players = [];
+  let apiReady = false;
+
+  function loadYouTubeAPI() {
+    if (window.YT && window.YT.Player) {
+      createPlayers();
+      return;
+    }
+
+    if (document.getElementById("youtube-iframe-api")) return;
+
+    const tag = document.createElement("script");
+    tag.id = "youtube-iframe-api";
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  window.onYouTubeIframeAPIReady = function () {
+    apiReady = true;
+    createPlayers();
+  };
+
+  function createPlayers() {
+    if (!apiReady && !(window.YT && window.YT.Player)) return;
+
+    document.querySelectorAll(".youtube-player").forEach(function (iframe) {
+      if (iframe.dataset.playerReady) return;
+
+      iframe.dataset.playerReady = "true";
+
+      players.push(new YT.Player(iframe, {
+        events: {
+          onStateChange: function (event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              players.forEach(function (player) {
+                if (player !== event.target) {
+                  try {
+                    player.pauseVideo();
+                  } catch (e) {}
+                }
+              });
+            }
+          }
+        }
+      }));
+    });
+  }
+
+  loadYouTubeAPI();
+})();
