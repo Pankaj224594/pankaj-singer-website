@@ -105,3 +105,33 @@
 .gallery-item figcaption {
     display: none !important;
 }
+/* YouTube videos in Listen & Watch */
+.youtube-video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+.youtube-video-card {
+    overflow: hidden;
+    border-radius: 12px;
+    background: #101c17;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+}
+
+.youtube-video-card iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    height: auto;
+    border: 0;
+}
+
+@media (max-width: 650px) {
+    .youtube-video-grid {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+    }
+}
