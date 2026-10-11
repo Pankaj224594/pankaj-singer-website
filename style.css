@@ -100,3 +100,8 @@
 .gallery-item span {
   display: none !important;
 }
+.gallery-item span,
+.gallery-item .caption,
+.gallery-item figcaption {
+    display: none !important;
+}
